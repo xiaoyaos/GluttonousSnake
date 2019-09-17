@@ -1,10 +1,8 @@
 import random
-import threading
-import time
 from pynput.keyboard import Controller,Key,Listener
 from apscheduler.schedulers.background import BackgroundScheduler
 
-defaultBody = "-"   # 默认数组填充字符串
+
 class Sanke:
   def __init__(self, currentHeadOrientation, snakeLeng, width, height):
     lcs = locals()
@@ -172,13 +170,11 @@ class Sanke:
           # 停止监听
           return False
       
-  
-
 
 height = 29               # 数组个数
 width = 60                # 数组长度
-site = ['0']*height
-
+site = ['0']*height       # 场地高度
+defaultBody = "-"         # 默认数组填充字符串
 
 # 初始化场地
 def initSite():
@@ -202,11 +198,8 @@ def run():
   
   initSite()
   snake.initSnake()
-  # snake.wriggle()
-  # 每秒更新蛇爬行
-  # time = threading.Timer(2, snake.wriggle)
-  # time.start()
-  
+
+  # 每0.5秒更新蛇爬行  
   scheduler = BackgroundScheduler()
   scheduler.add_job(snake.wriggle, 'interval', seconds=0.5)
   scheduler.start()
