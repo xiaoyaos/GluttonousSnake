@@ -1,4 +1,5 @@
 import random
+import os
 from pynput.keyboard import Controller,Key,Listener
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -22,14 +23,14 @@ class Sanke:
   
   # 蛇向前爬行
   def wriggle(self):
-    if self.currentHeadOrientation == "up":
-      print("向上爬")
-    if self.currentHeadOrientation == "down":
-      print("向下爬")
-    if self.currentHeadOrientation == "left":
-      print("向左爬")
-    if self.currentHeadOrientation == "right":
-      print("向右爬")
+    # if self.currentHeadOrientation == "up":
+    #   print("向上爬")
+    # if self.currentHeadOrientation == "down":
+    #   print("向下爬")
+    # if self.currentHeadOrientation == "left":
+    #   print("向左爬")
+    # if self.currentHeadOrientation == "right":
+    #   print("向右爬")
     self.generatesFruit()
     self.addSnakeBody()
     self.updateLocation()
@@ -49,7 +50,7 @@ class Sanke:
         if self.currentHeadOrientation == "right":
           self.bodyList[i] = [snake_copy[i][0], snake_copy[i][1]+1]
         if self.bodyList[i] == self.fruitPoint:
-          print("*-*-*-**-")
+          # print("*-*-*-**-")
           self.bodyList.append(self.bodyList[-1])
           self.fruitPoint = [0]*2
         continue
@@ -78,7 +79,7 @@ class Sanke:
       else:
         self.orientation[2] = "up"
 
-    print("当前可操作：", self.orientation)
+    # print("当前可操作：", self.orientation)
 
     if type != None:
       if type in self.orientation:
@@ -88,7 +89,7 @@ class Sanke:
         return False
     else:
       self.currentHeadOrientation = self.orientation[random.randint(0, len(self.orientation)-1)]
-    print("当前朝向", self.currentHeadOrientation)
+    # print("当前朝向", self.currentHeadOrientation)
     return True
   
   # 更新蛇的位置
@@ -144,9 +145,16 @@ class Sanke:
   
   # 刷新场地
   def updateSite(self):
+    os.system('cls')
+    print("蛇身长：", len(self.bodyList))
+    arr = []
     for i in range(height):
-      print("".join(site[i]))
-    print("当前位置：", self.bodyList)
+      arr = ["-"]*len(site[i])
+      if i <= 0:
+        print("".join(arr))
+      print( "|" + "".join(site[i]) + "|")
+    print("".join(arr))
+    # print("当前位置：", self.bodyList)
   
   # 监听释放
   def on_release(self, key):
@@ -174,7 +182,7 @@ class Sanke:
 height = 29               # 数组个数
 width = 60                # 数组长度
 site = ['0']*height       # 场地高度
-defaultBody = "-"         # 默认数组填充字符串
+defaultBody = " "         # 默认数组填充字符串
 
 # 初始化场地
 def initSite():
